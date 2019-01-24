@@ -9,10 +9,15 @@ class GoogleAuth extends React.Component{
                 clientId: '172960852300-0m8ocb0rgs55isarnsvqq8o7thvc5iv3.apps.googleusercontent.com',
                 scope: 'email'
             }).then(() => {
-                this.auth = window.gapi.auth2.getAuthInstance();;
-                this.setState({ isSignedIn: this.auth.isSignedIn.get() })
+                this.auth = window.gapi.auth2.getAuthInstance();
+                this.setState({ isSignedIn: this.auth.isSignedIn.get() });
+                this.auth.isSignedIn.listen(this.onAuthChange);
             })
         });
+    }
+
+    onAuthChange = () => {
+        this.setState({ isSignedIn: this.auth.isSignedIn.get() })
     }
 
     renderAuth = () => {
